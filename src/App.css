@@ -1,0 +1,151 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* .container {
+  display: block;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 15px
+} */
+.ui-menu__itemwrapper {
+  box-shadow: none !important;
+}
+.ui-menu__item__submenu {
+  padding: 0;
+  box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.15);
+  border: none !important;
+  background-color: #f5f5f5;
+  display: block !important;
+  min-width: 200px !important;
+  border-left: 3px solid #697c95 !important;
+}
+
+.ui-menu__item__submenu li {
+  border: none !important;
+}
+
+.ui-menu__item__submenu li a {
+  border: none !important;
+  padding: 12px 20px !important;
+  white-space: nowrap !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  color: #000;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between !important;
+}
+
+.ui-menu__item__submenu li a[aria-expanded="true"] {
+  background-color: #fff !important;
+}
+
+.sidebarPage {
+  display: grid;
+  grid-template-columns: 300px auto;
+}
+
+.settingsSidebar {
+  border-right: 2px solid #ddd;
+}
+
+.settingsSidebar-head {
+  border-bottom: 1px solid #ddd;
+  padding: 20px;
+}
+
+.settingsSidebar-head h2 {
+  font-size: 20px;
+  margin: 0;
+  color: #000;
+  text-align: left;
+}
+
+.settingTemplate {
+  text-align: left;
+  padding: 20px;
+}
+
+.settingTemplate-head {
+  margin-bottom: 20px;
+}
+
+.settingTemplate-head h3 {
+  font-size: 20px;
+  margin: 0 0 5px;
+  color: #000;
+}
+
+.settingTemplate-head span {
+  display: block;
+  font-size: 14px;
+  color: #888;
+}
+
+.settingTemplate-subHead {
+  margin-bottom: 35px;
+}
+
+.settingTemplate-subHead h4 {
+  font-size: 16px;
+  margin: 0 0 5px;
+  color: #000;
+}
+
+.settingTemplate-subHead span {
+  display: block;
+  font-size: 14px;
+  color: #888;
+}
+
+.menuFilterBtn {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 50px;
+}
+
+.singleTab{
+  padding: 3px;
+}
+.singleTab:hover{
+  background-color: lightgray;
+}
