@@ -1,16 +1,7 @@
 import { Header, Layout, Text } from "@fluentui/react-northstar";
 import MainSection from "./MainSection";
-import { selectedItemPropTypes } from "../types";
 
-interface settingsPropTypes { 
-  data: any;
-  setData: any;
-  selectedItem: selectedItemPropTypes;
-  setSelectedItem: any;
-}
-
-
-const Settings = ({ data, setData, selectedItem, setSelectedItem }: settingsPropTypes) => {
+const Settings = ({ data, setData, selectedItem, setSelectedItem }: any) => {
   return (
     <>
       <div className="container">

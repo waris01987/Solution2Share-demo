@@ -48,6 +48,7 @@
 .ui-menu__itemwrapper {
   box-shadow: none !important;
 }
+
 .ui-menu__item__submenu {
   padding: 0;
   box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.15);
@@ -81,6 +82,7 @@
 .sidebarPage {
   display: grid;
   grid-template-columns: 300px auto;
+  min-height: calc(100vh - 46px);
 }
 
 .settingsSidebar {
@@ -138,14 +140,95 @@
 
 .menuFilterBtn {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   margin-bottom: 50px;
 }
 
-.singleTab{
-  padding: 3px;
+/* .iconBtn {
+  height: 32px;
+  width: 32px;
+  min-width: 32px;
+} */
+
+.searchInput {
+  position: relative;
+  min-width: 250px;
 }
-.singleTab:hover{
-  background-color: lightgray;
+
+.searchInput-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  height: 32px;
+  width: 32px;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchInput .ui-box {
+  width: 100%;
+}
+
+.searchInput input {
+  padding-right: 32px !important;
+}
+
+.searchInput-data {
+  position: absolute;
+  top: 100%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0.2rem 0.4rem -0.075rem;
+  padding: 10px;
+  max-height: 250px;
+  overflow-y: auto;
+  background: #fff;
+  z-index: 1;
+}
+
+.searchInput-data div {
+  padding: 5px 10px;
+}
+.settingMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.settingMenu {
+  padding: 0;
+}
+.settingMenu a > ul {
+  margin-left: 30px;
+}
+.settingMenu a > ul a > ul {
+margin-left: 30px;
+}
+.settingMenu>li:first-child {
+  display: none;
+}
+
+.settingMenu li {
+  list-style-type: none;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: #000;
+}
+
+.settingMenu li a{
+  list-style-type: none;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: #000;
+  text-decoration: none;
+}
+
+.settingMenu li::marker {
+  display: none;
+}
+
+.settingMenu li .ui-icon svg {
+  height: 25px;
+  width: 25px;
 }

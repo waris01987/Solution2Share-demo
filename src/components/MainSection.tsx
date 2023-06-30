@@ -2,34 +2,33 @@ import {
   AddIcon,
   Box,
   Button,
+  Dialog,
   HandIcon,
   Header,
   Input,
+  SearchIcon,
   Text,
+  TriangleDownIcon,
+  TriangleEndIcon,
 } from "@fluentui/react-northstar";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const SingleMenu = ({ items }: any) => {
   const [show, setShow] = useState(false);
   if (items?.menu?.items) {
     return (
-      <li style={{fontSize: "18px"}}>
+      <li>
         <div>
-          <Link to={"#"} onClick={() => setShow(!show)} style={{textDecoration: "none", color: "black"}}>
+            {show ? <TriangleDownIcon /> : <TriangleEndIcon />}
             {items.content}
             <br />
-          </Link>
-          <ul
-            style={{ display: show ? "block" : "none", paddingLeft: "30px" }}
-          >
+          {/* </Link> */}
+          <ul style={{ display: show ? "block" : "none", paddingLeft: "30px" }}>
             {items?.menu?.items?.map((elem: any, index: number) => (
-              <>
-                {/* <div key={index}> */}
-                  {/* {elem.title} */}
-                  <SingleMenu items={elem} />
-                {/* </div> */}
-              </>
+              <React.Fragment key={index}>
+                <SingleMenu  items={elem} />
+              </React.Fragment>
             ))}
           </ul>
         </div>
@@ -37,7 +36,13 @@ const SingleMenu = ({ items }: any) => {
     );
   }
 
-  return <Link to={`/${items.content}`} style={{color: "black", fontSize: "18px"}}>{items.content}</Link>;
+  return (
+    <li style={{ minHeight: "25px", paddingLeft: "25px" }}>
+      <Link to={`/${items.content}`} onClick={() => setShow(!show)}>
+        {items.content}
+      </Link>
+  </li>
+  );
 };
 
 const MainSection = ({ data, setData, selectedItem, setSelectedItem }: any) => {
@@ -45,27 +50,28 @@ const MainSection = ({ data, setData, selectedItem, setSelectedItem }: any) => {
   // const [data, setData] = useState(dummyData)
   const [searchedItems, setSearchedItems] = useState([]);
   const [show, setShow] = useState(false);
-  const [showSearch, setShowSearch] = useState(false)
+  const [searchData, setSearchData] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  var ans: any = [];
-  function recursiveSearch(array: any, letter: string): any {
-    const result = [];
-    for (const obj of array) {
-      if (obj.content?.toLowerCase().includes(letter?.toLowerCase())) {
-        result.push(obj);
+  const recursiveSearch: any = useCallback(
+    (array: any, letter: string) =>  {
+  
+      const result = [];
+      for (const obj of array) {
+        if (obj.content?.toLowerCase().includes(letter?.toLowerCase())) {
+          result.push(obj);
+        }
+        if (obj.menu?.items.length > 0) {
+          result.push(...recursiveSearch(obj.menu?.items, letter));
+        }
       }
-      if (obj.menu?.items.length > 0) {
-        result.push(...recursiveSearch(obj.menu?.items, letter));
-      }
-    }
-    return result;
-  }
+      return result;
+    },
+    []
+  ) 
   useEffect(() => {
     const arr = recursiveSearch(data, search);
     setSearchedItems(arr);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
+  }, [data, recursiveSearch, search]);
 
   const handleSubmit = () => {
     if (Object.keys(selectedItem).length === 0) {
@@ -73,44 +79,23 @@ const MainSection = ({ data, setData, selectedItem, setSelectedItem }: any) => {
       test.push({
         key: "adfa",
         content: search,
+        on: "hover",
         id: "2",
       });
       setData(test);
     } else {
-      console.log(data.find((el: any) => el.content === selectedItem.content));
-      console.log(
-        selectedItem,
-        "THIS IS SELECTED ITEM",
-        filterByLabel(data, search)
-      );
       if (selectedItem.menu === undefined) {
         selectedItem.menu = {};
         selectedItem.menu.items = [];
       }
       selectedItem.menu.items.push({
-        key: "asdafsdfsadf", // Random Key 
+        key: (Math.random() * 100).toString() ,
         content: search,
+        on: "hover",
         id: "202",
       });
       setSelectedItem(selectedItem);
     }
-  };
-
-  const filterByLabel = (array: any, searchTerm: any) => {
-    console.log(array, searchTerm);
-    return array.reduce(
-      (prev: any, curr: any) => {
-        const children =
-          curr.menu !== undefined && curr.menu.items !== undefined
-            ? filterByLabel(curr.menu.items, search)
-            : undefined;
-
-        return curr.content === searchTerm || children?.length > 0
-          ? [...prev, { ...curr, children }]
-          : prev;
-      },
-      [...array]
-    );
   };
 
   useEffect(() => {}, [selectedItem]);
@@ -125,7 +110,7 @@ const MainSection = ({ data, setData, selectedItem, setSelectedItem }: any) => {
         <Header as="h4" content="Add Navigation Entries" />
         <Text content="Here's an example of how a section can be used as group inputs" />
       </Box>
-      <Box style={{marginBottom: "20px"}}>
+      <Box>
         <Text>
           Selected menu:{" "}
           <span style={{fontSize:"20px", fontWeight: "600"}}>
@@ -151,7 +136,7 @@ const MainSection = ({ data, setData, selectedItem, setSelectedItem }: any) => {
             <Button
               loader="Bypass firewall"
               primary
-              icon={<HandIcon />}
+              content="Go back"
               onClick={() => setShow(false)}
             />
           </div>
@@ -166,44 +151,42 @@ const MainSection = ({ data, setData, selectedItem, setSelectedItem }: any) => {
                 onClick={() => setShow(true)}
                 iconPosition="after"
               />
-              <Box>
-                  <Input type="text" role="search"  placeholder="Search..." onChange={(event: any) => setSearch(event.target.value)} onFocus={() => setShowSearch(true)} /> 
-                  {/* // TODO: ComponentEventHandler<InputProps> | React.ChangeEvent<HTMLInputElement></HTMLInputElement> */}
-                  {
-                    showSearch &&
-                    <Box style={{display: "flex", flexDirection: "column", height: "200px", overflowY: "scroll", boxShadow: "3px 10px 30px gray", padding: "10px", width: "100%", gap: "10px"}}>
-                        {
-                            searchedItems?.map((el: any) => {
-                                return (
-                                    <Box className="singleTab" content={el?.content} onClick={() => {
-                                        setSelectedItem(el)
-                                        setShow(true)
-                                    }} style={{cursor: "pointer"}}/>
-                                )
-                            })
-                        }
-                    </Box>
-                  }
-              </Box>
-            </div>
-            {/* {searchedItems?.map((el: any) => {
-              return (
-                <Box
-                  content={el?.content}
-                  onClick={() => {
-                    setSelectedItem(el);
-                    setShow(true);
-                  }}
-                  style={{ cursor: "pointer" }}
+              <div className="searchInput">
+                <Input
+                  type="text"
+                  role="search"
+                  placeholder="Search..."
+                  onChange={(e: any) => setSearch(e.target.value)}
+                  onFocus={() => setSearchData(true)}
+                  onBlur={() => setSearchData(false)}
                 />
-              );
-            })} */}
+                <span className="searchInput-btn">
+                  <SearchIcon />
+                </span>
+                  <Box className="searchInput-data">
+                    {searchedItems?.map((el: any, index) => {
+                      return (
+                        <Box
+                          key={index}
+                          content={el?.content}
+                          onClick={() => {
+                            setSelectedItem(el);
+                            setShow(true);
+                          }}
+                          style={{ cursor: "pointer" }}
+                        />
+                      );
+                    })}
+                  </Box>
+                {/* )} */}
+              </div>
+            </div>
           </>
         )}
       </Box>
+
       <ul className="settingMenu">
-        {/* {singleMenu(dummyData)} */}
-        {data.map((el: any, index: any) => {
+        {data.map((el: any, index: number) => {
           return <SingleMenu items={el} key={index} />;
         })}
       </ul>

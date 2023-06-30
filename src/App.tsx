@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
 import Settings from "./components/Settings";
 import { MenuIcon } from "@fluentui/react-icons-northstar";
-import { selectedItemPropTypes } from "./types";
 
 const dummyData = [
   {
@@ -14,12 +14,13 @@ const dummyData = [
   {
     key: "MenuItem1",
     content: "MenuItem1",
+    on: "hover",
     menu: {
-      on: "hover",
       items: [
         {
           key: "subMenuItem1",
           content: "Sub Menu Item 1",
+          on: "hover",
           menu: {
             items: [
               {
@@ -36,11 +37,13 @@ const dummyData = [
         {
           key: "subMenuItem2",
           content: "Sub Menu Item 2",
+          on: "hover",
           menu: {
             items: [
               {
                 key: "sub2.1",
                 content: "Sub sub child 1",
+                on: "hover",
                 menu: {
                   items: [
                     {
@@ -63,11 +66,13 @@ const dummyData = [
   {
     key: "menuItem2",
     content: "MenuItem2",
+    on: "hover",
     menu: {
       items: [
         {
           key: "subMenu1.1",
           content: "Sub Menu Item 1",
+          on: "hover",
           menu: {
             items: [
               {
@@ -91,11 +96,13 @@ const dummyData = [
   {
     key: "menuItem3",
     content: "MenuItem3",
+    on: "hover",
     menu: {
       items: [
         {
           key: "submenuItem3",
           content: "Sub Menu Item 1",
+          on: "hover",
           menu: {
             items: [
               {
@@ -126,13 +133,13 @@ const dummyData = [
   },
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const localData = localStorage.setItem("dummyData", JSON.stringify(dummyData));
-
 function App() {
-  const localData = JSON.parse(localStorage.getItem("dummyData") as any);
-  const [data, setData] = useState(localData);
-  const [selectedItem, setSelectedItem] = useState<selectedItemPropTypes>({});
+  const [data, setData] = useState(dummyData);
+  const [selectedItem, setSelectedItem] = useState<any>({});
+
+  useEffect(() => {
+    console.log("EFFECT TRIGGERED")
+  }, [data])
   return (
     <div className="App">
       <Navbar data={data} />
@@ -149,7 +156,7 @@ function App() {
             />
           }
         />
-        <Route path="*" element={<h1>Page not found</h1>} />
+        <Route path={"*"} element={<h2>Page not found</h2>} />
       </Routes>
     </div>
   );

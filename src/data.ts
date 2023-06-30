@@ -4,12 +4,12 @@ export const dummyData: any = [
         key: "MenuItem1",
         content: "MenuItem1",
         menu: {
-            on: "hover",
             items: [
                 {
                     id: '1.1',
                     key: "subMenuItem1",
                     content: "Sub Menu Item 1",
+                    on: 'hover',
                     menu: {
                         items: [
                             {
@@ -29,12 +29,14 @@ export const dummyData: any = [
                     id: '1.2',
                     key: "subMenuItem2",
                     content: "Sub Menu Item 2",
+                    on: 'hover',
                     menu: {
                         items: [
                             {
                                 id: '1.2.1',
                                 key: "sub2.1",
                                 content: "Sub sub child 1",
+                                on: 'hover',
                                 menu: {
                                     items: [
                                         {
@@ -65,6 +67,7 @@ export const dummyData: any = [
                 {
                     key: "subMenu1.1",
                     content: "Sub sub Menu Item 1",
+                    on: 'hover',
                     menu: {
                         items: [
                             {
@@ -89,11 +92,13 @@ export const dummyData: any = [
         id: 3,
         key: "menuItem3",
         content: "MenuItem3",
+        on: 'hover',
         menu: {
             items: [
                 {
                     key: "submenuItem3",      
                     content: "Sub Menu Item 1",
+                    on: 'hover',
                     menu: {
                         items:[
                             {
